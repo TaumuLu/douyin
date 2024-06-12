@@ -1,5 +1,5 @@
 <template>
-  <SlideVerticalInfinite
+  <SlidePage
     ref="listRef"
     v-love="props.uniqueId"
     :id="props.uniqueId"
@@ -12,15 +12,19 @@
     :list="state.list"
     @loadMore="loadMore"
     @refresh="() => getData(true)"
-  />
+    v-slot="itemProps"
+  >
+    <BaseVideo :item="itemProps.item" :index="itemProps.index" />
+  </SlidePage>
 </template>
 
 <script setup lang="jsx">
-import SlideVerticalInfinite from '@/components/slide/SlideVerticalInfinite.vue'
+import SlidePage from '@/components/slidePage/index.vue'
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import bus, { EVENT_KEY } from '@/utils/bus'
 import { useBaseStore } from '@/store/pinia'
 import { slideItemRender } from '@/utils'
+import BaseVideo from '@/components/slide/BaseVideo.vue'
 
 const props = defineProps({
   cbs: {
